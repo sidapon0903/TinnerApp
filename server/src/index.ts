@@ -3,6 +3,7 @@ import { Elysia,t } from "elysia";
 import { example } from "./controllers/example.controller";
 import{swagger} from  "@elysiajs/swagger"
 import{cors} from '@elysiajs/cors'
+import { tlsConfig } from "./configs/tls.config";
 const app = new Elysia()
 .use(cors())
 .use(swagger)
@@ -10,7 +11,7 @@ const app = new Elysia()
 .listen(8000)
 
 let protocol = 'http'
-if ('cert' in tlsconfig)
+if ('cert' in tlsConfig)
 protocol = 'https'
 
 console.log(`🦊 Elysia is running at ${protocol}://${app.server?.hostname}:${app.server?.port}`)

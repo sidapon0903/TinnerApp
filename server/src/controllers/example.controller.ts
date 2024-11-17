@@ -1,6 +1,4 @@
 import Elysia, { t } from "elysia"
-
-
 export const example = new Elysia()
     .get("/", () => "Hello Elysia", {
         detail: {
