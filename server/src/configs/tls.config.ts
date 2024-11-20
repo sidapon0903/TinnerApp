@@ -9,4 +9,4 @@ if (mode != 'production') {
     _tls = { cert, key }
 }
 
-export const tlsConfig = {  }
+export const tlsConfig = {..._tls  } 
