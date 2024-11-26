@@ -1,21 +1,24 @@
-import { listen } from "bun";
-import { Elysia,t } from "elysia";
+import { Elysia } from "elysia";
 import { example } from "./controllers/example.controller";
-import{swagger} from  "@elysiajs/swagger"
-import{cors} from '@elysiajs/cors'
+import{cors} from "@elysiajs/cors";
 import { tlsConfig } from "./configs/tls.config";
-import { MMapOptions } from "bun";
 import { MONGODB } from "./configs/dadtbase.configs";
-import { jwtConfig } from "./configs/jwt.configs";
+import { jwtConfig } from "./controllers/jwt.configs";
+import { Accountcontroller } from "./controllers/account.controllers";
+import { swaggerConfig } from "./configs/swagger.config";
+import { userController } from "./controllers/user.controllers";
+
 
 MONGODB.connect()
 const app = new Elysia()
+.use(Accountcontroller)
 .use(cors())
-.use(swagger)
+.use(swaggerConfig)
 .use(example)
 .use(jwtConfig)
+.use(userController)
 .listen({
-  port : Bun.env.PORT || 8000,
+port : Bun.env.PORT || 8000,
   tls : tlsConfig
 })
 

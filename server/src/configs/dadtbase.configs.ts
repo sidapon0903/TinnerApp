@@ -1,6 +1,3 @@
-//import { connect } from "bun"
-//import { error } from "elysia"
-//import mongoose, { mongo } from "mongoose"
 
 import mongoose from "mongoose"
 

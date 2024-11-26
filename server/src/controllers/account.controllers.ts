@@ -1,28 +1,48 @@
-import Elysia, { error }  from "elysia";
-import { jwtConfig } from "../configs/jwt.configs";
-import { AccountDto } from "../configs/types/account.types";
-import { AccountService } from "../configs/services/account.services";
+import Elysia, { error }  from "elysia"
+import { jwtConfig } from "./jwt.configs";
+import { _login, AccountDto } from "../types/account.typer";
+import { AccountService } from "../services/account.services";
 export const Accountcontroller = new Elysia({
  prefix:'/api/acoount',
  tags : ['Account']
 })
 .use(jwtConfig)
 .use(AccountDto)
-.post('/register',async({body,jwt,set}) => {
+
+.post('/login',async({body,jwt,set}) => {
+ try{
+    const user = await AccountService.login(body)
+    const token = await jwt.sign({id:user.id})
+    return{user,token}
+ }catch (error){
+ set.status="Bad Request"
+if(error instanceof Error)
+    throw new Error(error.message)
+set.status="Internal Server Error"
+throw new Error ("Something went wong, try agin leter")
+}
+},{
+    detail : {summary : "login "} ,
+    body : "login",
+    Response :"_userAndtoken" ,
+})
+.post('/register',async ({body,jwt,set})=> {
     try{
         const user = await AccountService.createNewUser(body)
         const token = await jwt.sign({id:user.id})
         return{token,user}
     }catch (error){
-    set.status+"Bad Request"
+    set.status="Bad Request"
     if(error instanceof Error)
         throw new Error (error.message)
     set.status=500
     throw new Error ('sonething went wrong ,try aging later')
     }
-},{
+},
+{
+    
 body : "register",
-Response : "account",
+Response : "_userAndtoken",
 deteil : {
     summary :"Create new user"
 },
