@@ -1,18 +1,12 @@
 import Elysia, { Static, t } from "elysia"
+import { _register } from "./register.typer"
 
 
 export const _login = t.Object({
  username: t.String(),
  _password: t.String()
 })
- export const _register = t.Object({
-     username: t.String(),
-     password: t.String(),
-     display_name: t.String(),
-     dete_of_birth: t.Optional(t.Date()),
-     looking_for: t.Union ([t.Literal ('male'),t.Literal('famal'),t.Literal('all')]),
-     gender: t.Optional(t.Union([t.Literal ('male'),t.Literal('famal'),t.Literal('all')]))
- })
+ 
  export const  _profile = t.Object({
     ...t.Omit ( _register ,['password']).properties,
     id : t.String(),

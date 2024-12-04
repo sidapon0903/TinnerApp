@@ -7,6 +7,9 @@ import { jwtConfig } from "./controllers/jwt.configs";
 import { Accountcontroller } from "./controllers/account.controllers";
 import { swaggerConfig } from "./configs/swagger.config";
 import { userController } from "./controllers/user.controllers";
+import staticPlugin from "@elysiajs/static";
+import { photocontroller } from "./controllers/photo.controllers";
+
 
 
 MONGODB.connect()
@@ -14,7 +17,11 @@ const app = new Elysia()
 .use(Accountcontroller)
 .use(cors())
 .use(swaggerConfig)
-.use(example)
+.use(staticPlugin())
+//asserts : "public"
+//prefix : "img"
+//.use(example)
+.use(photocontroller)
 .use(jwtConfig)
 .use(userController)
 .listen({

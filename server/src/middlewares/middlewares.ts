@@ -7,7 +7,7 @@ type AuthContext = {
     }
 }
 export type AuthPayload = {id : string}
-export const AuthPayload = new Elysia({name : 'Middleware.Auth' })
+export const AuthMiddleWere = new Elysia({name : 'Middleware.Auth' })
 .use(jwtConfig)
     .derive({ as: 'scoped' }, async ({ headers, jwt }): Promise<AuthContext> => {
         let payload: false | (Record<string, string | number> & JWTPayloadSpec) = false
@@ -29,7 +29,7 @@ export const AuthPayload = new Elysia({name : 'Middleware.Auth' })
         // This is declaring a service method
         isSignIn(value: boolean) {
             if (!value) return
-            onBeforeHandle((context: AuthContext & { error: Function; }) => {
+            onBeforeHandle((context) => {
                 const { Auth, error } = context as AuthContext & { error: Function }
                 if (!Auth.payload) return error(401)
             })
