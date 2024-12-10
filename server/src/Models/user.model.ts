@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import { IUserDocument, IUserModel } from "../interfaces/user.intrefaces"
 import { calculateAge } from "../helpers/date.helpers"
-import { user, register, _register } from "../types/account.typer"
+import { user, register, } from "../types/account.typer"
 
 
 const schema = new mongoose.Schema<IUserDocument, IUserModel>({
@@ -69,7 +69,7 @@ schema.methods.verifyPassword = async function (password: string): Promise<boole
     return await Bun.password.verify(password, this.password_hash)
 }
 schema.statics.creatUser = async function (registerData: register): Promise<IUserDocument> {
-    const newUser = new this({
+    const newUser =await new this({
         display_name: registerData.display_name,
         username: registerData.username,
         password: await Bun.password.hash(registerData.password),
@@ -81,6 +81,6 @@ schema.statics.creatUser = async function (registerData: register): Promise<IUse
     await newUser.save()
     return newUser
 }
-    export const User = mongoose.model<IUserDocument,IUserModel>("user",schema)
+    export const User = mongoose.model<IUserDocument,IUserModel>("User",schema)
         
 

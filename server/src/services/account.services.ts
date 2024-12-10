@@ -1,5 +1,5 @@
 import { User } from "../Models/user.model"
-import { _user, login, register, user } from "../types/account.typer"
+import {  login, register, user } from "../types/account.typer"
 
 
 
@@ -8,7 +8,7 @@ export const AccountService = {
     const user = await User.findOne ({username:loginDeta. username  }).exec()
 if(!user)
     throw new Error ("user dose not exist ")
-const verifyPassword = user.verifyPassword(loginDeta._password)
+const verifyPassword = user.verifyPassword(loginDeta.password)
 if (!verifyPassword)
      throw new Error ("password is incorrect")
 return user.toUser()

@@ -12,7 +12,7 @@ export interface IUserDocument extends mongoose.Document, userWithOutId{
     toUser: ()=> user
 }
 export interface IUserModel extends mongoose.Model<IUserDocument>{
-    toUser(): unknown;
+    
     createUser: (registerData:register )=> Promise <IUserDocument>
 
 

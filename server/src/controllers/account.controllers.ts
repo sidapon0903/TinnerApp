@@ -1,7 +1,8 @@
 import Elysia, { error }  from "elysia"
-import { jwtConfig } from "./jwt.configs";
+
 import { _login, AccountDto } from "../types/account.typer";
 import { AccountService } from "../services/account.services";
+import { jwtConfig } from "../configs/jwt.config";
 export const Accountcontroller = new Elysia({
  prefix:'/api/acoount',
  tags : ['Account']
@@ -24,7 +25,7 @@ throw new Error ("Something went wong, try agin leter")
 },{
     detail : {summary : "login "} ,
     body : "login",
-    Response :"_userAndtoken" ,
+    Response :"user_and_token" ,
 })
 .post('/register',async ({body,jwt,set})=> {
     try{
@@ -42,7 +43,7 @@ throw new Error ("Something went wong, try agin leter")
 {
     
 body : "register",
-Response : "_userAndtoken",
+Response : "user_and_token",
 deteil : {
     summary :"Create new user"
 },

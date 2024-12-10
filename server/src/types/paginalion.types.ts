@@ -10,7 +10,7 @@ export const _pagination = t.Object({
   export function CreatePagination<T extends TSchema, U extends TSchema>(itemtype:T,paginationtype:U){
     return t.Object({
       items : t.Array(itemtype),
-      paginalion : paginationtype
+      pagination : paginationtype
     })
   }
 

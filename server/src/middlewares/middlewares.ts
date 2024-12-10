@@ -1,15 +1,16 @@
-import { jwtConfig } from "../controllers/jwt.configs";
+
 import Elysia from "elysia";
 import { JWTPayloadSpec } from "@elysiajs/jwt";
+import { jwtConfig } from "../configs/jwt.config";
 type AuthContext = {
-    Auth : {
+Auth : {
         payload : false | (Record<string,string|number>&JWTPayloadSpec)
     }
 }
 export type AuthPayload = {id : string}
 export const AuthMiddleWere = new Elysia({name : 'Middleware.Auth' })
 .use(jwtConfig)
-    .derive({ as: 'scoped' }, async ({ headers, jwt }): Promise<AuthContext> => {
+    .derive({ as: 'scoped' }, async ({headers , jwt }): Promise<AuthContext> => {
         let payload: false | (Record<string, string | number> & JWTPayloadSpec) = false
 
         //Extract the 'Authorization' header from the incoming request

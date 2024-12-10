@@ -18,7 +18,7 @@ export const example = new Elysia()
         }), detail: {
             tags: ["Example"],
             summary: "abput",
-            description: "sidapon"
+            description: "Numbertwo"
         }
     })
 

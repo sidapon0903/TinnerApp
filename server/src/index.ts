@@ -1,14 +1,15 @@
 import { Elysia } from "elysia";
-import { example } from "./controllers/example.controller";
+
 import{cors} from "@elysiajs/cors";
 import { tlsConfig } from "./configs/tls.config";
 import { MONGODB } from "./configs/dadtbase.configs";
-import { jwtConfig } from "./controllers/jwt.configs";
+
 import { Accountcontroller } from "./controllers/account.controllers";
 import { swaggerConfig } from "./configs/swagger.config";
-import { userController } from "./controllers/user.controllers";
+import { UserContreller } from "./controllers/user.controllers";
 import staticPlugin from "@elysiajs/static";
-import { photocontroller } from "./controllers/photo.controllers";
+import { jwtConfig } from "./configs/jwt.config";
+
 
 
 
@@ -17,13 +18,14 @@ const app = new Elysia()
 .use(Accountcontroller)
 .use(cors())
 .use(swaggerConfig)
-.use(staticPlugin())
-//asserts : "public"
-//prefix : "img"
+.use(staticPlugin({
+assets : "public/uploads",
+prefix : "img"
+}))
 //.use(example)
-.use(photocontroller)
+
 .use(jwtConfig)
-.use(userController)
+.use(UserContreller)
 .listen({
 port : Bun.env.PORT || 8000,
   tls : tlsConfig
