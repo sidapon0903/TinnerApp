@@ -2,6 +2,8 @@ import Elysia, { Static, t } from "elysia"
 
 import { _pagination, CreatePagination,pagination} from "./paginalion.types"
 import { _register } from "./register.typer"
+import { Photo } from "../Models/photo.model"
+import { _photo } from "./photo.type"
 
   
 
@@ -16,6 +18,7 @@ export const  _profile = t.Object({
     last_active : t.Optional(t.Date()),
     created_at :t.Optional(t.Date()),
     updated_at :t.Optional(t.Date()),
+    photos : t.Optional(t.Array(_photo))
  })
   export const  _user = t.Object({
    ..._profile.properties,

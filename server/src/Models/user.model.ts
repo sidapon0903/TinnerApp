@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import { IUserDocument, IUserModel } from "../interfaces/user.intrefaces"
 import { calculateAge } from "../helpers/date.helpers"
 import { user, register, } from "../types/account.typer"
+import { Photo } from "./photo.model"
 
 
 const schema = new mongoose.Schema<IUserDocument, IUserModel>({
@@ -17,7 +18,7 @@ const schema = new mongoose.Schema<IUserDocument, IUserModel>({
     gender : { type: String },
 
     // todo: implement photo feature
-    // photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }],
+     photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }],
     // todo: implement like feature
     // followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -31,9 +32,9 @@ schema.methods.toUser = function (): user {
 
 
     // todo: implement like feature
-    // const userPhotos = Array.isArray(this.photos)
-    //     ? this.photos.map(photo => (new Photo(photo)).toPhoto())
-    //     : undefined
+    const userPhotos = Array.isArray(this.photos)
+        ? this.photos.map(photo => (new Photo(photo)).toPhoto())
+         : undefined
 
     // const parseLikeUser = (user: IUserDocument[]) => {
     //     return user.map(u => {
@@ -62,7 +63,8 @@ schema.methods.toUser = function (): user {
     interest: this.interest,
     looking_for: this.looking_for,
     location: this.location,
-    gender : this.gender
+    gender : this.gender,
+    photos : userPhotos,
 }
 }
 schema.methods.verifyPassword = async function (password: string): Promise<boolean>{

@@ -9,6 +9,7 @@ import { swaggerConfig } from "./configs/swagger.config";
 import { UserContreller } from "./controllers/user.controllers";
 import staticPlugin from "@elysiajs/static";
 import { jwtConfig } from "./configs/jwt.config";
+import { Photocontroller } from "./controllers/photo.controllers";
 
 
 
@@ -26,6 +27,7 @@ prefix : "img"
 
 .use(jwtConfig)
 .use(UserContreller)
+.use(Photocontroller)
 .listen({
 port : Bun.env.PORT || 8000,
   tls : tlsConfig
