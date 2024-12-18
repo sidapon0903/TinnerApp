@@ -10,6 +10,7 @@ import { UserContreller } from "./controllers/user.controllers";
 import staticPlugin from "@elysiajs/static";
 import { jwtConfig } from "./configs/jwt.config";
 import { Photocontroller } from "./controllers/photo.controllers";
+import { likecontroller } from "./controllers/like.controller";
 
 
 
@@ -24,7 +25,7 @@ assets : "public/uploads",
 prefix : "img"
 }))
 //.use(example)
-
+.use (likecontroller)
 .use(jwtConfig)
 .use(UserContreller)
 .use(Photocontroller)

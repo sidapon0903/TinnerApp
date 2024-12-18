@@ -1,5 +1,7 @@
 import { User } from "../Models/user.model"
-import {  login, register, user } from "../types/account.typer"
+import {  login, register } from "../types/account.typer"
+import { user } from "../types/user.types"
+
 
 
 
@@ -7,6 +9,14 @@ export const AccountService = {
     login: async function (loginDeta : login ): Promise<user>{
     const user = await User.findOne ({username:loginDeta. username  })
     .populate("photos")
+    .populate({
+        path:"follwing",
+        select : "_id"
+    })
+    .populate({
+        path:" followers",
+        select : "_id"
+    })
     .exec()
 if(!user)
     throw new Error ("user dose not exist ")

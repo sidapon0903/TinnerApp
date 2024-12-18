@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import { Cloudinary } from "../configs/doudinary.configs";
+import { Cloudinary } from "../configs/cloudinary.configs";
 import { imageHelper } from "../helpers/image.helpers";
 import { Photo } from "../Models/photo.model";
 import { photo } from "../types/photo.type";
 import { User } from "../Models/user.model";
+import { example } from "../controllers/example.controller";
 
 export const PhotosServicer = {
     upload : async function (file: File,user_id:string):Promise<photo> {
@@ -14,7 +15,7 @@ export const PhotosServicer = {
         const base64 = Buffer.from(buffer).toString('base64')
         const dataURI = `data:${file.type};base64,${base64}`
        const cloudPhoto= await Cloudinary.uploader.upload(dataURI,{
-        folder:'user-images',
+        folder:'class-example-user-images',
         resource_type : 'auto',
         transformation : [{
             with:500,
@@ -23,7 +24,7 @@ export const PhotosServicer = {
             gravity : 'face'
         }]
        })
-        if (!cloudPhoto.public_id || !cloudPhoto.secure_url)
+        if (!cloudPhoto.public_id || !cloudPhoto.url)
             throw new Error ("Something went wrong , try agin later !!")
 
     const uploadPhoto = new Photo ({
@@ -39,15 +40,37 @@ export const PhotosServicer = {
     return uploadPhoto.toPhoto()
     },
 
-        get: async function (user_id:string) : Promise<photo>{
-            throw new Error ("not implement")
+        getPhotos: async function (user_id:string) : Promise<photo[]>{
+            const photoDocs = await  Photo.find({user:user_id}).exec()
+           const photos = photoDocs.map( doc => doc.toPhoto())
+           return photos
         },
        
-        delete :async  function (photo_id:string) : Promise<boolean[]>{
-                throw new Error ("not implement")
+        delete :async  function (photo_id:string) : Promise<boolean>{
+           const doc = await Photo.findById(photo_id).exec()
+           if(!doc)
+            throw new Error(`photo${photo_id}not existing`)
+        await User.findByIdAndUpdate(doc.user,{
+            $pull:{photos:photo_id}
+        })
+        await Photo.findByIdAndDelete(photo_id)
+
+        await Cloudinary.uploader.destroy(doc.public_id)
+
+   return true
             },
           
             setAvtar : async function (photo_id:string,user_id:string ) : Promise<boolean>{
-                    throw new Error ("not implement")
+                await Photo.updateMany(
+                    {user:new mongoose.Types.ObjectId(user_id)},
+                    {$set:{is_avatar:false}}
+
+                )
+              const result =  await Photo.findByIdAndUpdate(user_id,
+                    {$set : {is_avatar:true}},
+                    //{new: true}
+                )
+                
+                return !!result
                 },
 }

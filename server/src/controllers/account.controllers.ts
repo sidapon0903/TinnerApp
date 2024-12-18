@@ -4,7 +4,7 @@ import { _login, AccountDto } from "../types/account.typer";
 import { AccountService } from "../services/account.services";
 import { jwtConfig } from "../configs/jwt.config";
 export const Accountcontroller = new Elysia({
- prefix:'/api/acoount',
+ prefix:'/api/account',
  tags : ['Account']
 })
 .use(jwtConfig)

@@ -19,6 +19,6 @@ export const _login = t.Object({
     user_and_token : _userAndToken
     
   })
-  export type user = Static<typeof _user>
+  //export type user = Static<typeof _user>
   export type register = Static<typeof _register>
   export type login = Static<typeof _login >
