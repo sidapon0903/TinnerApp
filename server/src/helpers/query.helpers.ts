@@ -1,10 +1,10 @@
 import mongoose from "mongoose"
 import { IUserDocument } from "../interfaces/user.intrefaces"
-import { userpagination } from "../types/user.types"
+import { _userPagination as userPagination } from "../types/user.types"
 
 export const QueryHelper = {
 
-    parseUserQuery: function (query:userpagination): mongoose.FilterQuery<IUserDocument>[] {
+    parseUserQuery: function (query:userPagination ): mongoose.FilterQuery<IUserDocument>[] {
         const filter: mongoose.FilterQuery<IUserDocument>[] = []
 
         if (query.username) {
@@ -17,7 +17,7 @@ export const QueryHelper = {
             const _filter = { looking_for: { $regex: regEx } }
             filter.push(_filter)
         }
-        if (query.gender&&query.gender!='all') {
+        if (query.gender && query.gender !== 'all') {
 
             const regEx = new RegExp(`\\b${query.gender.trim()}`, 'i')
             const _filter = { gender: { $regex: regEx } }

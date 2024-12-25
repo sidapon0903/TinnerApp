@@ -6,7 +6,7 @@ import { photo } from "../types/photo.type";
 import { User } from "../Models/user.model";
 import { example } from "../controllers/example.controller";
 
-export const PhotosServicer = {
+export const PhotoService = {
     upload : async function (file: File,user_id:string):Promise<photo> {
         const buffer = await file.arrayBuffer()
             const isFileValid = imageHelper.isImage(buffer)
@@ -42,8 +42,7 @@ export const PhotosServicer = {
 
         getPhotos: async function (user_id:string) : Promise<photo[]>{
             const photoDocs = await  Photo.find({user:user_id}).exec()
-           const photos = photoDocs.map( doc => doc.toPhoto())
-           return photos
+           return photoDocs.map(doc => doc.toPhoto())
         },
        
         delete :async  function (photo_id:string) : Promise<boolean>{

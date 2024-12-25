@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-import { register, user } from "../types/account.typer";
+import { register,  } from "../types/account.typer";
+import { user } from "../types/user.types";
 
 
 

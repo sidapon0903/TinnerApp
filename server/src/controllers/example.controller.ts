@@ -3,7 +3,7 @@ export const example = new Elysia()
     .get("/", () => "Hello Elysia", {
         detail: {
             tags: ["Example"],
-            summary: "get hello",
+            summary: "get/hello",
             description: "sidapon"
         }
     })

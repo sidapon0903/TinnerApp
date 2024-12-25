@@ -7,10 +7,10 @@ import { user } from "../types/user.types"
 
 export const AccountService = {
     login: async function (loginDeta : login ): Promise<user>{
-    const user = await User.findOne ({username:loginDeta. username  })
+    const user = await User.findOne ({username:loginDeta.username  })
     .populate("photos")
     .populate({
-        path:"follwing",
+        path:"following",
         select : "_id"
     })
     .populate({
@@ -19,10 +19,10 @@ export const AccountService = {
     })
     .exec()
 if(!user)
-    throw new Error ("user dose not exist ")
-const verifyPassword = user.verifyPassword(loginDeta.password)
+    throw new Error ("User Does not exist ")
+const verifyPassword =await user.verifyPassword(loginDeta.password)
 if (!verifyPassword)
-     throw new Error ("password is incorrect")
+     throw new Error ("Password is incorrect")
 return user.toUser()
 
 

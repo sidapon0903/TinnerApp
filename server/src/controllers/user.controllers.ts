@@ -1,9 +1,9 @@
 import Elysia from "elysia";
-import { AuthMiddleWere, AuthPayload } from "../middlewares/middlewares";
+import { AuthMiddleWere, authPayload } from "../middlewares/middlewares";
 import { UserService } from "../services/user.services";
 import { UserDto } from "../types/user.types";
 
-export const UserContreller = new Elysia({
+export const UserController = new Elysia({
 prefix : "/api/user" ,
 tags : ['User']
 })
@@ -17,8 +17,17 @@ tags : ['User']
 },{
     isSignIn : true
 },)
+.get('/all',()=>{
+    return{
+        user:[
+            {id: '1212',name : 'a'},
+            {id: '1212',name : 'b'}
+        ]
+}},{
+
+})
 .get('/',({query,Auth})=>{
-    const user_id=(Auth.payload as AuthPayload).id
+    const user_id=(Auth.payload as authPayload).id
     return UserService.get(query, user_id)
 },{
     detail:{summary:"Get User"},
@@ -28,7 +37,7 @@ tags : ['User']
 })
 .patch('/',async({body,set,Auth})=>{
     try{
-    const user_id = (Auth.payload as AuthPayload).id
+    const user_id = (Auth.payload as authPayload).id
      await UserService.updateProfile(body, user_id)
      set.status="No Content"
     }
@@ -41,7 +50,6 @@ tags : ['User']
 }
 },{
     detail : {summary:"Update Profile"},
-        body: "_updateProfile",
-       // Response :"user" ,
-       isSignIn : true
+        body : "updateProfile",
+        isSignIn : true
 })

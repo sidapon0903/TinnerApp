@@ -1,13 +1,13 @@
 
 import { IUserDocument } from "../interfaces/user.intrefaces"
-import { _updateProfile, user,userpagination,userpaginator } from "../types/user.types"
+import { _updateProfile as updateProfile, user,_userPaginator as userPaginator, _userPagination as userPagination, _updateProfile } from "../types/user.types"
 import { User } from "../Models/user.model"
 import { QueryHelper } from "../helpers/query.helpers"
 import mongoose, { RootFilterQuery } from "mongoose"
 
 
 export const UserService = {
-    get: async function (pagintion: userpagination, user_id: string): Promise<userpaginator> {
+    get: async function (pagintion: userPagination, user_id: string): Promise<userPaginator> {
         let filter: RootFilterQuery<IUserDocument> = {
             _id: {$nin :new mongoose.Types.ObjectId(user_id) },
             $and: QueryHelper.parseUserQuery(pagintion)
@@ -33,16 +33,16 @@ export const UserService = {
         
     
    getByuserName : async function (username : string): Promise<user> {
-        const user= await User.findOne({username})  .populate("photos").exec()
+        const user= await User.findOne({username}).populate("photos").exec()
        if (user)
         return user.toUser()
-        throw new Error ('username :"${username}"not found!!')
+        throw new Error (`username :"${username}"not found!!!`)
    },
     updateProfile :async function (newProfile: _updateProfile,user_id:string):Promise<user> {
         const user = await User.findByIdAndUpdate(user_id,{ $set: newProfile},{new: true, runValidators:true})
     if (user)
         return user.toUser()
-    throw new Error('Something went,try agin later')
+    throw new Error('Something went wrong,try again later')
 
 
 

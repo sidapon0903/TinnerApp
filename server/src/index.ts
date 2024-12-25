@@ -6,7 +6,7 @@ import { MONGODB } from "./configs/dadtbase.configs";
 
 import { Accountcontroller } from "./controllers/account.controllers";
 import { swaggerConfig } from "./configs/swagger.config";
-import { UserContreller } from "./controllers/user.controllers";
+import { UserController } from "./controllers/user.controllers";
 import staticPlugin from "@elysiajs/static";
 import { jwtConfig } from "./configs/jwt.config";
 import { Photocontroller } from "./controllers/photo.controllers";
@@ -27,7 +27,7 @@ prefix : "img"
 //.use(example)
 .use (likecontroller)
 .use(jwtConfig)
-.use(UserContreller)
+.use(UserController)
 .use(Photocontroller)
 .listen({
 port : Bun.env.PORT || 8000,

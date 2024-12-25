@@ -1,0 +1,19 @@
+mat-toolbar button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+mat-toolbar button:not(.home-button){
+    color:rgb(82, 8, 20);
+    border-bottom : 0.15em solid red;
+}
+mat-toolbar button.active:not(.home-button){
+    color: rgb(82, 8, 20);
+    border-bottom : 0.15em solid red;
+}
+mat-toolbarhome-button{
+    color: aqua;
+}
