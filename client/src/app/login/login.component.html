@@ -1,1 +1,50 @@
-<p>login works!</p>
+<div class = "login-container">
+<form (ngSubmit)="onSudmit()"[formGroup]="form"ariaAutoComplete="off">
+
+    <mat-form-field appearance="outline">
+    <mat-label>username</mat-label>
+    <input matInput placeholder="username"type="text"(input)="updateErrorMassage('UserName')"
+    formControlName="UserName">
+    <mat-error>{{errorMessages.username()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>password</mat-label>
+        <input matInput placeholder="password"type="text"(input)="updateErrorMassage('password')"
+        formControlName="password">
+        <mat-error>{{errorMessages.password()}}</mat-error>
+        </mat-form-field>
+
+        @if(mode ==='register'){
+
+        <mat-form-field appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <input matInput placeholder="Confirm password"type="text"(input)="updateErrorMassage('Confirm password')"
+            formControlName="Confirm password">
+            <mat-error>{{errorMessages.confirm_password()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>date_of_birth'</mat-label>
+                <input matInput [min]="minDate"[max]="maxDate" [matDatepicker]="picker" formControlName="date_of_birth">
+                <mat-datepiker #piker></mat-datepiker>
+                formControlName="Confirm password">
+        }
+        <button mat-flat-button  [disabled]="form.invalid">Login</button>
+      <div class="Login-spacer"></div>
+        @if(mode ==='login'){
+            Login 
+        }
+        @if(mode ==='register'){
+        GET StART
+        }
+
+    </form>
+<div class="Login-spacer"></div>
+@if(mode ==='login'){
+    <div class = 'toggle'> New To MyApp? <span (click)="toggleMode">Sign Up</span></div>
+}
+@if(mode ==='sign'){
+    <div class = 'toggle'> New To MyApp? <span (click)="toggleMode">Sign In</span></div>
+}
+</div>
