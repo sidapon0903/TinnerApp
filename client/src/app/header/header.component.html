@@ -10,8 +10,31 @@
     </button>
 
     <span class="my-spacer"></span>
+    @if (user()===undefined) {
    <button routerLink="/login">
       <mat-icon>login</mat-icon>
+      <span>login</span>
     </button>
-  </mat-toolbar>
+  }
+  @if (user()) {
+    <button>
+      <span>Follower</span>
+    </button>
+    <button>
+      <span>Following</span>
+
+    </button>
   
+  }
+  <button mat-button [matMenuTriggerFor] ="menu">{{user()?.display_name}}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+    <button (click)="logOut()">
+    <mat-icon>logOut</mat-icon>
+    <span>logOut</span>
+  </button>
+
+</mat-menu>
+
+</mat-toolbar>
