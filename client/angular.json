@@ -33,7 +33,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_module/ngx-spinner/animations/line-spin-clockwise-fade-rotating.css"
+              "node_modules/ngx-spinner/animations/line-spin-clockwise-fade-rotating.css"
             ],
             "scripts": []
           },

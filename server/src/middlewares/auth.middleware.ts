@@ -1,17 +1,16 @@
-
-import Elysia from "elysia";
-import { JWTPayloadSpec } from "@elysiajs/jwt";
-import { jwtConfig } from "../configs/jwt.config";
+import Elysia from "elysia"
+import { jwtConfig } from "../configs/jwt.config"
+import { JWTPayloadSpec } from "@elysiajs/jwt"
 type AuthContext = {
-Auth : {
-        payload : false | (Record<string,string|number>&JWTPayloadSpec)
+    Auth: {
+        payload: false | (Record<string, string | number> & JWTPayloadSpec)
     }
 }
-export type authPayload = {id : string}
-export const 
-AuthMiddleWere = new Elysia({name : 'Middleware.Auth' })
-.use(jwtConfig)
-    .derive({ as: 'scoped' }, async ({headers , jwt }): Promise<AuthContext> => {
+export type AuthPayload = { id: string }
+export const AuthMiddleWare = new Elysia({ name: 'Middleware.Auth' })
+
+    .use(jwtConfig)
+    .derive({ as: 'scoped' }, async ({ headers, jwt }): Promise<AuthContext> => {
         let payload: false | (Record<string, string | number> & JWTPayloadSpec) = false
 
         //Extract the 'Authorization' header from the incoming request
@@ -27,7 +26,7 @@ AuthMiddleWere = new Elysia({name : 'Middleware.Auth' })
             Auth: { payload }
         }
     })
-    .macro(({onBeforeHandle}) => ({
+    .macro(({ onBeforeHandle }) => ({
         // This is declaring a service method
         isSignIn(value: boolean) {
             if (!value) return
