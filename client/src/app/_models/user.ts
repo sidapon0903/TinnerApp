@@ -1,6 +1,7 @@
 import { Photo } from "./photo";
 
 export interface User {
+ user: User;
  id:string,
  display_name?:string,
  username?:string,

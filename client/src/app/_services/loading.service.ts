@@ -13,7 +13,8 @@ this.loadingRequestCount++
 this.spinner.show(undefined,{
   type : "line-spin-clockwise-fade-rotating",
   bdColor :'rgba(0, 0, 0, 0.8)',
-  color :'hsla(0, 16.80%, 19.80%, 0.00)'
+  color :'hsla(0, 16.80%, 19.80%, 0.00)',
+  fullScreen : true
 })
 }
 idle(){
