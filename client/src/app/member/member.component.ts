@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core'
+import { environment } from '../../environments/environment'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-member',
@@ -8,4 +8,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
 })
-export class MemberComponent {}
+
+export class MemberComponent {
+
+}

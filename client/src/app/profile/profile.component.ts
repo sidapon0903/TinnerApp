@@ -6,18 +6,34 @@ import { FormsModule, NgForm } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [MatTabsModule,FormsModule,MatInputModule,MatFormFieldModule,MatSelectModule],
+  imports: [MatTabsModule,FormsModule,MatInputModule,MatFormFieldModule,MatSelectModule,MatButtonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
+onSubmit() {
+throw new Error('Method not implemented.');
+}
+updateErrorMessgae(arg0: string) {
+throw new Error('Method not implemented.');
+}
+toggleMode() {
+throw new Error('Method not implemented.');
+}
 private  accoutService = inject(AccountService)
 user:User
 @ViewChild('form')form?:NgForm
+mode: any;
+errorMessages: any;
+mindate: any;
+maxdate: any;
+startDate: any;
+errorFormServer: any;
 constructor(){
   this.user=this.accoutService.data()!.user
 }

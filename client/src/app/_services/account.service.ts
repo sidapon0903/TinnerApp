@@ -72,14 +72,16 @@ export class AccountService {
       await firstValueFrom(response)
       const currenData = this.data()
       if(currenData){
-        currenData.user=user
+        currenData.user = user
         this.data.set(currenData)
         this.saveDataToLocalStorage()
 
       }
     }catch(error){
       return false
+
     }
+    
     return true
   }
 }

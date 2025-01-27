@@ -26,8 +26,6 @@ case 400:
   case 404 :
     this.SnackBar.open('/404')
     break
-
-
     case 500:
     case 500:
     case 501:
@@ -44,7 +42,7 @@ case 400:
 if (err.error.message === 'Token has expired'){
 this.router.navigate(['/'])
 }
-const navExtras:NavigationExtras ={
+const navExtras:NavigationExtras = { 
   state:{
     error:err.error,
     massege:err.state}

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http'
+import { Component, inject } from '@angular/core'
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,14 @@ import { environment } from '../../environments/environment';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
- 
-  
- }
+  // private _http = inject(HttpClient)
+  // onError(code: number) {
+  //   this._http.get(environment.baseUrl + 'api/error/' + code).subscribe({
+  //     error: e => console.error(e)
+
+  //   })
+  // }
+
+
+}
 
