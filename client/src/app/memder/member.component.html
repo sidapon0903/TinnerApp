@@ -1,0 +1,12 @@
+<div class="member-container"></div>
+
+@for (member of paginator().items; track member.id) {
+<p>{{ member.display_name }}</p>
+}
+<mat-paginator
+  [length]="paginator().pagination.length"
+  [pageSize]="paginator().pagination.pageSize"
+  [pageSizeOptions]="pageSize"
+  aria-label="Select-page"
+  (page)="(onpageChange)"
+></mat-paginator>

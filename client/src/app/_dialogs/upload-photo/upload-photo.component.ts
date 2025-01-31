@@ -7,7 +7,7 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog'
-import { filter } from 'rxjs'
+
 import { fileTypeFromBlob } from 'file-type'
 @Component({
   selector: 'app-upload-photo',

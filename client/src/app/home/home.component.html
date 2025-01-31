@@ -1,5 +1,14 @@
-<!-- <p>home works!</p>
-<button (click)="onError(500)">500</button>
-<button (click)="onError(400)">400</button>
-<button (click)="onError(503)">503</button>
-<button (click)="onError(404)">404</button> -->
+@if (!user){
+
+<div class="container">
+  <div class="Welcome">
+    <h1>Welcome ro tinner app</h1>
+    <h3>come on in to view your math</h3>
+    <p>
+      all you need todo is <a href="/login">Sigin-in Or Create an account</a>
+    </p>
+  </div>
+</div>
+} @if (user()){
+<app-member></app-member>
+}
