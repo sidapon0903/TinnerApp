@@ -14,7 +14,7 @@
     "@angular/cdk": "19.0.4",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
-    "@angular/core": "^19.0.0",
+    "@angular/core": "^19.1.6",
     "@angular/forms": "^19.0.0",
     "@angular/material": "19.0.4",
     "@angular/platform-browser": "^19.0.0",
@@ -24,7 +24,7 @@
     "ng-gallery": "^12.0.0",
     "ngx-spinner": "^17.0.0",
     "ngx-timeago": "^3.0.0",
-    "rxjs": "~7.8.0",
+    "rxjs": "^7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

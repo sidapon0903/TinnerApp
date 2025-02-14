@@ -39,4 +39,8 @@ export class MemberService {
   getMembers() {
     this.getData('members')
   }
+  async getMemberByUsername(username: string): Promise<User | undefined> {
+    return undefined
+
+  }
 }

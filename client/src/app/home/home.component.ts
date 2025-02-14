@@ -3,7 +3,7 @@ import { Component, computed, Inject, inject, Signal } from '@angular/core'
 import { environment } from '../../environments/environment'
 import { AccountService } from '../_services/account.service'
 import { User } from '../_models/user'
-import { MemberComponent } from '../member/member.component'
+import { MemberComponent } from '../memder/member.component'
 
 @Component({
   selector: 'app-home',

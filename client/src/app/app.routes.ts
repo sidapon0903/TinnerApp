@@ -14,7 +14,11 @@ export const routes: Routes = [
         children: [
             {
                 path: 'members',
-                loadComponent: () => import('./member/member.component').then(c => c.MemberComponent)
+                loadComponent: () => import('./memder/member.component').then(c => c.MemberComponent)
+            },
+            {
+                path: 'members-profile/:username',
+                loadComponent: () => import('./member/member-profile/member-profile.component').then(c => c.MemberProfileComponent)
             },
             {
                 path: 'profile',

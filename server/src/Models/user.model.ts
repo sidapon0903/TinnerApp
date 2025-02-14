@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-
 import { register } from "../types/account.type"
 import { calculateAge } from "../helpers/date.helper"
 import { user } from "../types/user.type"
