@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment'
 import { default_paginator, Paginator, UserQueryPagination } from '../_helper/pagination'
 import { User } from '../_models/user'
 import { catchManager } from '../_helper/cache'
-import { parseQuery } from '../_helper/_helper'
+import { parseQuery, parseUserPhoto } from '../_helper/_helper'
+import { firstValueFrom } from 'rxjs'
 
 type dataCategory = 'members' | 'follower' | 'following'
 
@@ -40,6 +41,21 @@ export class MemberService {
     this.getData('members')
   }
   async getMemberByUsername(username: string): Promise<User | undefined> {
+    const member = this.paginator().items.find(obj => obj.username === username)
+    if (member) {
+      console.log('นิ่งไว้เ!!!!!!')
+      return member
+    }
+    else {
+      console.log('นิ่งไว้เ!!!!!!/api')
+      try {
+        const url = this.url + 'user/' + username
+        const _member = await firstValueFrom(this.http.get<User>(url))
+        return parseUserPhoto(_member)
+      } catch (error) {
+        console.error('Get Member Error', error)
+      }
+    }
     return undefined
 
   }

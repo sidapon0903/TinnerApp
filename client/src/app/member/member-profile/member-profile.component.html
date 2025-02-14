@@ -1,1 +1,65 @@
-<p>member-profile works!</p>
+@if (member) {
+<mat-drawer-container class="example-container" autosize>
+  <div class="sidenav-content content">
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{
+          member.display_name + "@" + member.username
+        }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="left">
+          <img
+            class="img-thumb"
+            mat-card-image
+            src="{{ member.avater }}"
+            alt="photo of member"
+          />
+          <mat-card-actions align="end">
+            <button mat-button (click)="toggle()">
+              <mat-icon class="icon">image</mat-icon>
+            </button>
+          </mat-card-actions>
+        </div>
+
+        <div class="right">
+          <div>
+            <strong>Intorduction</strong>
+            <p>{{ member.introduction }}</p>
+          </div>
+          <div>
+            <strong>Interest</strong>
+            <p>{{ member.introduction || "N/A" }}</p>
+          </div>
+          <div>
+            <p>
+              <strong>Looking for : </strong>{{ member.introduction || "N/A" }}
+            </p>
+            <p><strong>Gemder : </strong>{{ member.introduction || "N/A" }}</p>
+            <p><strong>Age: </strong>{{ member.introduction || "N/A" }}</p>
+            <p><strong>Location: </strong>{{ member.introduction || "N/A" }}</p>
+            <p>
+              <strong>Last active: </strong>{{ member.introduction || "N/A" }}
+            </p>
+            <p>
+              <strong>Mamber since: </strong>{{ member.introduction || "N/A" }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-drawer #photo class="sidenav" mode="over" position="end">
+    <p>photo</p>
+    @if(photo.opened){
+    <gallery class="gallery" [items]="images"> </gallery>
+    }
+    <button mat-button (click)="photo.toggle()">
+      <mat-icon class="icon">arrow_bake_ios</mat-icon>
+      Backto profile
+    </button>
+  </mat-drawer>
+</mat-drawer-container>
+
+}
