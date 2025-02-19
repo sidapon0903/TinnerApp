@@ -12,6 +12,7 @@ import { PhotoController } from "./controllers/photo.controller"
 import { LikeController } from "./controllers/like.controller"
 import { MongoDB } from "./configs/dadtbase.configs"
 import { ErrorController } from "./controllers/errorControllers"
+import { MessageController } from "./controllers/message.contrllers"
 
 MongoDB.connect()
 
@@ -31,6 +32,7 @@ const app = new Elysia()
   .use(PhotoController)
   .use(LikeController)
   .use(ErrorController)
+  .use(MessageController)
 
   .listen({
     port: Bun.env.PORT || 8000,

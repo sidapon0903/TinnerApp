@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable, signal } from '@angular/core'
 import { environment } from '../../environments/environment'
-import { default_paginator, Paginator, UserQueryPagination } from '../_helper/pagination'
+import { default_paginator, Paginator, UserQueryPagination } from '../_models/pagination'
 import { User } from '../_models/user'
 import { catchManager } from '../_helper/cache'
 import { parseQuery, parseUserPhoto } from '../_helper/_helper'

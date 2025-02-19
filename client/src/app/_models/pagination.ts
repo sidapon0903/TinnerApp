@@ -4,6 +4,7 @@ export interface QueryPagination {
     length?: number
 }
 export interface UserQueryPagination extends QueryPagination {
+
     username?: string
     min_age?: number
     max_age?: number

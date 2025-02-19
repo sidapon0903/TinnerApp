@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatSelectModule } from '@angular/material/select'
 import { MatIconModule } from '@angular/material/icon'
 import { MemberCardComponent } from './member-card/member-card.component'
-import { default_paginator, Paginator, UserQueryPagination, default_pagesizeOption } from '../_helper/pagination'
+import { default_paginator, Paginator, UserQueryPagination, default_pagesizeOption } from '../_models/pagination'
 
 @Component({
   selector: 'app-member',

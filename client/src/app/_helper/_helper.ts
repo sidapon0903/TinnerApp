@@ -1,6 +1,6 @@
 import { Query } from "@angular/core"
 import { User } from "../_models/user"
-import { QueryPagination, UserQueryPagination } from "./pagination"
+import { QueryPagination, UserQueryPagination } from "../_models/pagination"
 
 const defaultAvatar = '/assets/images-removebg-preview.png'
 const images_not_found = '/ggg.png.png'
