@@ -1,4 +1,5 @@
 export const environment = {
-    baseUrl: 'https://localhost:8000',
+    production: false,
+    baseUrl: '/',
     wsUrl: '/api/message/ws'
 }

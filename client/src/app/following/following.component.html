@@ -43,6 +43,7 @@
             >
           </mat-select>
         </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>Min Age</mat-label>
           <input
@@ -61,6 +62,7 @@
             [(ngModel)]="following().pagination.max_age"
           />
         </mat-form-field>
+
         <button mat-raised-button type="submit">Search</button>
         <button mat-raised-button type="button" (click)="onResetSearch()">
           Reset
@@ -74,12 +76,13 @@
       <app-member-card [member]="member"></app-member-card>
     </div>
     }
-    <mat-paginator
-      [length]="following().pagination.length"
-      [pageSize]="following().pagination.pageSize"
-      [pageSizeOptions]="pageSize"
-      aria-label="Select page"
-      (page)="onPageChange($event)"
-    ></mat-paginator>
   </div>
+
+  <mat-paginator
+    [length]="following().pagination.length"
+    [pageSize]="following().pagination.pageSize"
+    [pageSizeOptions]="pageSize"
+    aria-label="Select page"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
 </div>
