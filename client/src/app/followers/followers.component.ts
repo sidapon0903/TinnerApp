@@ -20,6 +20,9 @@ import { MatExpansionModule } from '@angular/material/expansion'
 })
 
 export class FollowersComponent implements OnInit {
+  onReset() {
+    throw new Error('Method not implemented.')
+  }
   private likeService = inject(LikeService)
   followers: WritableSignal<Paginator<UserQueryPagination, User>>
   // paginator: any;

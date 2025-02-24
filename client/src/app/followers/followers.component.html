@@ -43,6 +43,7 @@
             >
           </mat-select>
         </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>Min Age</mat-label>
           <input
@@ -61,25 +62,27 @@
             [(ngModel)]="followers().pagination.max_age"
           />
         </mat-form-field>
+
         <button mat-raised-button type="submit">Search</button>
-        <button mat-raised-button type="button" (click)="onResetSearch()">
+        <button mat-raised-button type="button" (click)="onReset()">
           Reset
         </button>
       </form>
     </mat-expansion-panel>
   </mat-accordion>
-  <div class="member-list">
+  <div class="memberlist">
     @for (member of followers().items; track member.id) {
-    <div class="member-item">
+    <div class="member-itemiv">
       <app-member-card [member]="member"></app-member-card>
     </div>
     }
-    <mat-paginator
-      [length]="followers().pagination.length"
-      [pageSize]="followers().pagination.pageSize"
-      [pageSizeOptions]="pageSize"
-      aria-label="Select page"
-      (page)="onPageChange($event)"
-    ></mat-paginator>
   </div>
+
+  <mat-paginator
+    [length]="followers().pagination.length"
+    [pageSize]="followers().pagination.pageSize"
+    [pageSizeOptions]="pageSize"
+    aria-label="Select page"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
 </div>

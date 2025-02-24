@@ -1,88 +1,158 @@
 import Elysia, { error, t } from "elysia"
 import { jwtConfig } from "../configs/jwt.config"
 import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
-import { MessageDto } from "../types/message.type"
-import { Response } from "bun-types/fetch"
-import mongoose, { mongo } from "mongoose"
+import { message, MessageDto } from "../types/message.type"
+import mongoose from "mongoose"
 import { Message } from "../Models/message.models"
 
 type client = {
-    ws_id: String
-    user_id: String
-    group_name: String
+    ws_id: string,
+    user_id: string,
+    group_name: string,
 }
+
 const groupSubscription = new Map<string, Set<client>>()
+
 export const MessageController = new Elysia({
     prefix: "api/message",
-    tags: ["Message"],
+    tags: ['Message']
 })
+
     .use(jwtConfig)
     .use(AuthMiddleWare)
     .use(MessageDto)
     .ws('/ws', {
         async open(ws) {
             const token = ws.data.query.token
-            const recipient_id = ws.data.query.recipinent_id
+            const recipient_id = ws.data.query.recipient_id
             const payload = await ws.data.jwt.verify(token)
             if (!payload || !recipient_id) {
-                ws.send({
-                    sender: 'ststem', content: 'Unauthorized'
-                })
+                ws.send({ sender: 'system', content: 'Unauthorized' })
                 ws.close()
             }
             const user_id = (payload as AuthPayload).id
-            const groupName = getGroupName(user_id, recipient_id)
-            ws.send({ sender: 'system', conttent, 'connectend' })if (!ws.i)
+            const groupName = getGroupName(user_id, recipient_id!)
+
+            ws.send({ sender: 'system', content: 'Connected' })
+            if (!ws.isSubscribed(groupName)) {
+                ws.subscribe(groupName)
+
+                if (!groupSubscription.has(groupName)) {
+                    groupSubscription.set(groupName, new Set())
+                }
+
+                groupSubscription.get(groupName)?.add({
+                    ws_id: ws.id,
+                    user_id: user_id,
+                    group_name: groupName
+                })
+            }
         },
-        close(ws) { },
-        message(ws, messages) { }
+
+        close(ws) {
+            for (const clients of groupSubscription.values()) {
+                for (const client of clients) {
+                    if (client.ws_id === ws.id) {
+                        ws.unsubscribe(client.group_name)
+                        clients.delete(client)
+
+                    }
+                }
+            }
+        },
+
+        async message(ws, message) {
+            const msg = message as message
+            if (!msg.sender || !msg.recipient || !msg.content) {
+                ws.send({ sender: 'system', content: 'Invalid Message !!!🍕' })
+                return
+            }
+
+            const groupName = getGroupName(msg.sender, msg.recipient)
+
+            try {
+                const newMessage = new Message({
+                    sender: new mongoose.Types.ObjectId(msg.sender),
+                    recipient: new mongoose.Types.ObjectId(msg.recipient),
+                    content: msg.content
+                })
+                if (isRecipientConnected(groupName, msg.recipient)) {
+                    newMessage.read_at = new Date()
+                }
+
+                await newMessage.save()
+                const msgObj = newMessage.toMessage()
+                ws.publish(groupName, msgObj)
+                ws.send(msgObj)
+            } catch (error) {
+                ws.send({ sender: 'system', content: 'Someting went wrong , fail to sent message !!!🍕' })
+                return
+            }
+
+        },
     })
 
-    .get('/:recipinent_id', async ({ Auth, param: { recipient_id }, query }) => {
-        if (!query.pageSize || !query.currentPage)
+    .get('/:recipient_id', async ({ Auth, params: { recipient_id }, query }) => {
+        if (!query.pageSize)
             throw error(400)
         const user_id = (Auth.payload as AuthPayload).id
-        const sender_Object = new mongoose.Types.ObjectId(user_id)
-        const recipient_Object = new mongoose.Types.ObjectId(recipient_id)
-
+        const sender_ObjId = new mongoose.Types.ObjectId(user_id)
+        const recipient_ObjId = new mongoose.Types.ObjectId(recipient_id)
 
         const filter = {
             $or: [
-                { sender: sender_Object, recipient: recipient_Object, sender_delete: { $ne: true } },
-                { sender: recipient_Object, recipient: sender_Object, recipient_delete: { $ne: true } }
+                { sender: sender_ObjId, recipient: recipient_ObjId, sender_delete: { $ne: true } },
+                { sender: recipient_ObjId, recipient: sender_ObjId, recipient_delete: { $ne: true } },
             ]
-
         }
         const model = Message.find(filter).sort({ created_at: -1 })
+
         const skip = query.pageSize * (query.currentPage - 1)
         model.skip(skip).limit(query.pageSize)
-        const [message, totalCount] = await Promise.all([
+
+        const [messageDocs, totalCount] = await Promise.all([
+            model.exec(),
             Message.countDocuments(filter).exec()
         ])
-        query.length = totalCount
-        cont message = messDocs.map()
 
-    }
-        query: "pagination",
-        response: "Message",
-        isSignIn: true,
-        params: t.Object({
-            target_id: t.String()
+        query.length = totalCount
+        const messages = messageDocs.map(doc => doc.toMessage())
+        await Message.updateMany({
+            sender: recipient_ObjId,
+            recipient: sender_ObjId,
+            read_at: { $exists: false }
+        }, {
+            $set: { read_at: new Date() }
         })
+
+        return {
+            pagination: query,
+            items: messages
+        }
+
+    }, {
+        query: "pagination",
+        response: "messages",
+        isSignIn: true,
+        params: t.Object({ recipient_id: t.String() })
     })
+
 const getGroupName = function (sender: string, recipient: string): string {
     const compare = sender.localeCompare(recipient)
     if (compare < 0)
-        return `${sender}-${recipient}`
+        return `${sender} -${recipient}`
+
     return `${recipient}-${sender}`
 
 }
 const countSubscriber = function (group_name: string): number {
     return groupSubscription.get(group_name)?.size || 0
 }
+
 const isRecipientConnected = function (group_name: string, recipient: string): boolean {
-    const group = countSubscriber(group_name)
-    if (!client)
+
+    const clients = groupSubscription.get(group_name)
+    if (clients)
         return Array.from(clients).find(client => client.user_id === recipient) !== undefined
     return false
 }
